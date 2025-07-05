@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Timetable Management</title>
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/faculty.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <%- include("partials/navbar") %>
+    <div class="content">
+        <h1><i class="fas fa-calendar-plus"></i> Timetable Management</h1>
+        <p>Create and manage class schedules for your students.</p>
+
+        <!-- Add New Class Section -->
+        <div class="add-class-section">
+            <h2><i class="fas fa-plus-circle"></i> Add New Class</h2>
+            <form id="addClassForm" class="class-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select Subject</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Biology">Biology</option>
+                            <option value="English">English</option>
+                            <option value="History">History</option>
+                            <option value="Geography">Geography</option>
+                            <option value="Computer Science">Computer Science</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="day">Day:</label>
+                        <select id="day" name="day" required>
+                            <option value="">Select Day</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="startTime">Start Time:</label>
+                        <input type="time" id="startTime" name="startTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime">End Time:</label>
+                        <input type="time" id="endTime" name="endTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="room">Room:</label>
+                        <input type="text" id="room" name="room" placeholder="e.g., Room 101" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="grade">Grade/Class:</label>
+                        <select id="grade" name="grade" required>
+                            <option value="">Select Grade</option>
+                            <option value="Grade 9">Grade 9</option>
+                            <option value="Grade 10">Grade 10</option>
+                            <option value="Grade 11">Grade 11</option>
+                            <option value="Grade 12">Grade 12</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add Class
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        <i class="fas fa-undo"></i> Reset
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Timetable Display -->
+        <div class="timetable-section">
+            <h2><i class="fas fa-calendar-alt"></i> Current Timetable</h2>
+            <div class="timetable-controls">
+                <button id="exportTimetable" class="btn btn-info">
+                    <i class="fas fa-download"></i> Export Timetable
+                </button>
+                <button id="printTimetable" class="btn btn-secondary">
+                    <i class="fas fa-print"></i> Print Timetable
+                </button>
+            </div>
+            
+            <div class="timetable-container">
+                <div class="timetable-grid" id="timetableGrid">
+                    <!-- Timetable will be dynamically generated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Class Management -->
+        <div class="class-management">
+            <h2><i class="fas fa-cogs"></i> Class Management</h2>
+            <div class="class-list" id="classList">
+                <!-- Classes will be dynamically listed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Class Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-edit"></i> Edit Class</h2>
+            <form id="editClassForm">
+                <input type="hidden" id="editClassId">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="editSubject">Subject:</label>
+                        <select id="editSubject" name="subject" required>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Biology">Biology</option>
+                            <option value="English">English</option>
+                            <option value="History">History</option>
+                            <option value="Geography">Geography</option>
+                            <option value="Computer Science">Computer Science</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDay">Day:</label>
+                        <select id="editDay" name="day" required>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editStartTime">Start Time:</label>
+                        <input type="time" id="editStartTime" name="startTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEndTime">End Time:</label>
+                        <input type="time" id="editEndTime" name="endTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editRoom">Room:</label>
+                        <input type="text" id="editRoom" name="room" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editGrade">Grade/Class:</label>
+                        <select id="editGrade" name="grade" required>
+                            <option value="Grade 9">Grade 9</option>
+                            <option value="Grade 10">Grade 10</option>
+                            <option value="Grade 11">Grade 11</option>
+                            <option value="Grade 12">Grade 12</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let classes = JSON.parse(localStorage.getItem('facultyClasses')) || [];
+        let currentEditId = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTimetable();
+            renderClassList();
+        });
+
+        // Add new class
+        document.getElementById('addClassForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const newClass = {
+                id: Date.now(),
+                subject: formData.get('subject'),
+                day: formData.get('day'),
+                startTime: formData.get('startTime'),
+                endTime: formData.get('endTime'),
+                room: formData.get('room'),
+                grade: formData.get('grade'),
+                teacher: '<%= admin ? admin.name : "Teacher" %>'
+            };
+
+            classes.push(newClass);
+            saveClasses();
+            renderTimetable();
+            renderClassList();
+            e.target.reset();
+            
+            showNotification('Class added successfully!', 'success');
+        });
+
+        // Edit class
+        function editClass(classId) {
+            const classItem = classes.find(c => c.id === classId);
+            if (classItem) {
+                currentEditId = classId;
+                document.getElementById('editClassId').value = classId;
+                document.getElementById('editSubject').value = classItem.subject;
+                document.getElementById('editDay').value = classItem.day;
+                document.getElementById('editStartTime').value = classItem.startTime;
+                document.getElementById('editEndTime').value = classItem.endTime;
+                document.getElementById('editRoom').value = classItem.room;
+                document.getElementById('editGrade').value = classItem.grade;
+                
+                document.getElementById('editModal').style.display = 'block';
+            }
+        }
+
+        // Save edited class
+        document.getElementById('editClassForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const classIndex = classes.findIndex(c => c.id === currentEditId);
+            
+            if (classIndex !== -1) {
+                classes[classIndex] = {
+                    ...classes[classIndex],
+                    subject: formData.get('subject'),
+                    day: formData.get('day'),
+                    startTime: formData.get('startTime'),
+                    endTime: formData.get('endTime'),
+                    room: formData.get('room'),
+                    grade: formData.get('grade')
+                };
+                
+                saveClasses();
+                renderTimetable();
+                renderClassList();
+                closeModal();
+                
+                showNotification('Class updated successfully!', 'success');
+            }
+        });
+
+        // Delete class
+        function deleteClass(classId) {
+            if (confirm('Are you sure you want to delete this class?')) {
+                classes = classes.filter(c => c.id !== classId);
+                saveClasses();
+                renderTimetable();
+                renderClassList();
+                
+                showNotification('Class deleted successfully!', 'success');
+            }
+        }
+
+        // Render timetable
+        function renderTimetable() {
+            const timetableGrid = document.getElementById('timetableGrid');
+            const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const timeSlots = ['8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'];
+            
+            let html = '<div class="timetable-header">';
+            html += '<div class="time-slot-header">Time</div>';
+            days.forEach(day => {
+                html += `<div class="day-header">${day}</div>`;
+            });
+            html += '</div>';
+            
+            timeSlots.forEach(time => {
+                html += '<div class="timetable-row">';
+                html += `<div class="time-slot">${time}</div>`;
+                
+                days.forEach(day => {
+                    const classItem = classes.find(c => c.day === day && c.startTime === time);
+                    if (classItem) {
+                        html += `
+                            <div class="class-slot" onclick="editClass(${classItem.id})">
+                                <div class="class-subject">${classItem.subject}</div>
+                                <div class="class-details">${classItem.grade} | ${classItem.room}</div>
+                                <div class="class-time">${classItem.startTime} - ${classItem.endTime}</div>
+                            </div>
+                        `;
+                    } else {
+                        html += '<div class="empty-slot"></div>';
+                    }
+                });
+                html += '</div>';
+            });
+            
+            timetableGrid.innerHTML = html;
+        }
+
+        // Render class list
+        function renderClassList() {
+            const classList = document.getElementById('classList');
+            
+            if (classes.length === 0) {
+                classList.innerHTML = '<p class="no-classes">No classes scheduled yet.</p>';
+                return;
+            }
+            
+            let html = '';
+            classes.forEach(classItem => {
+                html += `
+                    <div class="class-item">
+                        <div class="class-info">
+                            <h3>${classItem.subject}</h3>
+                            <p><i class="fas fa-calendar"></i> ${classItem.day}</p>
+                            <p><i class="fas fa-clock"></i> ${classItem.startTime} - ${classItem.endTime}</p>
+                            <p><i class="fas fa-map-marker-alt"></i> ${classItem.room}</p>
+                            <p><i class="fas fa-users"></i> ${classItem.grade}</p>
+                        </div>
+                        <div class="class-actions">
+                            <button onclick="editClass(${classItem.id})" class="btn btn-small btn-primary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button onclick="deleteClass(${classItem.id})" class="btn btn-small btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            classList.innerHTML = html;
+        }
+
+        // Save classes to localStorage
+        function saveClasses() {
+            localStorage.setItem('facultyClasses', JSON.stringify(classes));
+            // Also save to a shared storage that students can access
+            localStorage.setItem('sharedTimetable', JSON.stringify(classes));
+        }
+
+        // Modal functions
+        function closeModal() {
+            document.getElementById('editModal').style.display = 'none';
+            currentEditId = null;
+        }
+
+        // Close modal when clicking on X or outside
+        document.querySelector('.close').addEventListener('click', closeModal);
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('editModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Export timetable
+        document.getElementById('exportTimetable').addEventListener('click', function() {
+            const dataStr = JSON.stringify(classes, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'timetable.json';
+            link.click();
+        });
+
+        // Print timetable
+        document.getElementById('printTimetable').addEventListener('click', function() {
+            window.print();
+        });
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                ${message}
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html> 

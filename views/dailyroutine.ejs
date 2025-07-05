@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Routine</title>
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/dailyroutine.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <%- include("partials/navbar") %>
+    <div class="content">
+        <h1><i class="fas fa-calendar-day"></i> Your Daily Routine</h1>
+        <p>Plan your day effectively to achieve academic excellence!</p>
+        
+        <!-- Daily Schedule -->
+        <div class="schedule-section">
+            <h2><i class="fas fa-clock"></i> Daily Schedule</h2>
+            <div class="schedule-container">
+                <div class="time-slots">
+                    <div class="time-slot" data-time="06:00">
+                        <span class="time">6:00 AM</span>
+                        <div class="activity" data-time="06:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="07:00">
+                        <span class="time">7:00 AM</span>
+                        <div class="activity" data-time="07:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="08:00">
+                        <span class="time">8:00 AM</span>
+                        <div class="activity" data-time="08:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="09:00">
+                        <span class="time">9:00 AM</span>
+                        <div class="activity" data-time="09:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="10:00">
+                        <span class="time">10:00 AM</span>
+                        <div class="activity" data-time="10:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="11:00">
+                        <span class="time">11:00 AM</span>
+                        <div class="activity" data-time="11:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="12:00">
+                        <span class="time">12:00 PM</span>
+                        <div class="activity" data-time="12:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="13:00">
+                        <span class="time">1:00 PM</span>
+                        <div class="activity" data-time="13:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="14:00">
+                        <span class="time">2:00 PM</span>
+                        <div class="activity" data-time="14:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="15:00">
+                        <span class="time">3:00 PM</span>
+                        <div class="activity" data-time="15:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="16:00">
+                        <span class="time">4:00 PM</span>
+                        <div class="activity" data-time="16:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="17:00">
+                        <span class="time">5:00 PM</span>
+                        <div class="activity" data-time="17:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="18:00">
+                        <span class="time">6:00 PM</span>
+                        <div class="activity" data-time="18:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="19:00">
+                        <span class="time">7:00 PM</span>
+                        <div class="activity" data-time="19:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="20:00">
+                        <span class="time">8:00 PM</span>
+                        <div class="activity" data-time="20:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="21:00">
+                        <span class="time">9:00 PM</span>
+                        <div class="activity" data-time="21:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="time-slot" data-time="22:00">
+                        <span class="time">10:00 PM</span>
+                        <div class="activity" data-time="22:00">
+                            <input type="text" placeholder="Add activity..." class="activity-input">
+                            <button class="add-activity"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="schedule-actions">
+                    <button id="saveSchedule" class="btn btn-primary"><i class="fas fa-save"></i> Save Schedule</button>
+                    <button id="clearSchedule" class="btn btn-secondary"><i class="fas fa-trash"></i> Clear All</button>
+                    <button id="loadTemplate" class="btn btn-info"><i class="fas fa-download"></i> Load Template</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Planner -->
+        <div class="task-section">
+            <h2><i class="fas fa-tasks"></i> Task Planner</h2>
+            <div class="task-container">
+                <div class="task-input-section">
+                    <input type="text" id="taskInput" placeholder="Enter a new task..." class="task-input">
+                    <select id="taskPriority" class="priority-select">
+                        <option value="low">Low Priority</option>
+                        <option value="medium" selected>Medium Priority</option>
+                        <option value="high">High Priority</option>
+                    </select>
+                    <button id="addTask" class="btn btn-primary"><i class="fas fa-plus"></i> Add Task</button>
+                </div>
+                <div class="task-lists">
+                    <div class="task-column">
+                        <h3><i class="fas fa-list"></i> To Do</h3>
+                        <div id="todoList" class="task-list"></div>
+                    </div>
+                    <div class="task-column">
+                        <h3><i class="fas fa-spinner"></i> In Progress</h3>
+                        <div id="inProgressList" class="task-list"></div>
+                    </div>
+                    <div class="task-column">
+                        <h3><i class="fas fa-check"></i> Completed</h3>
+                        <div id="completedList" class="task-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Habit Tracker -->
+        <div class="habit-section">
+            <h2><i class="fas fa-chart-bar"></i> Habit Tracker</h2>
+            <div class="habit-container">
+                <div class="habit-input">
+                    <input type="text" id="habitInput" placeholder="Add a new habit..." class="habit-input-field">
+                    <button id="addHabit" class="btn btn-primary"><i class="fas fa-plus"></i> Add Habit</button>
+                </div>
+                <div class="habit-grid" id="habitGrid">
+                    <!-- Habits will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Productivity Stats -->
+        <div class="stats-section">
+            <h2><i class="fas fa-chart-pie"></i> Today's Progress</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-tasks"></i>
+                    <h3>Tasks Completed</h3>
+                    <div class="stat-value" id="tasksCompleted">0</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Study Time</h3>
+                    <div class="stat-value" id="studyTime">0h 0m</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <h3>Habits Done</h3>
+                    <div class="stat-value" id="habitsDone">0</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-percentage"></i>
+                    <h3>Productivity</h3>
+                    <div class="stat-value" id="productivity">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Task management
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        let habits = JSON.parse(localStorage.getItem('habits')) || [];
+        let schedule = JSON.parse(localStorage.getItem('schedule')) || {};
+
+        // Task functionality
+        const taskInput = document.getElementById('taskInput');
+        const taskPriority = document.getElementById('taskPriority');
+        const addTaskBtn = document.getElementById('addTask');
+        const todoList = document.getElementById('todoList');
+        const inProgressList = document.getElementById('inProgressList');
+        const completedList = document.getElementById('completedList');
+
+        function addTask() {
+            const text = taskInput.value.trim();
+            const priority = taskPriority.value;
+            
+            if (text) {
+                const task = {
+                    id: Date.now(),
+                    text: text,
+                    priority: priority,
+                    status: 'todo',
+                    createdAt: new Date().toISOString()
+                };
+                
+                tasks.push(task);
+                saveTasks();
+                renderTasks();
+                taskInput.value = '';
+                updateStats();
+            }
+        }
+
+        function moveTask(taskId, newStatus) {
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.status = newStatus;
+                saveTasks();
+                renderTasks();
+                updateStats();
+            }
+        }
+
+        function deleteTask(taskId) {
+            tasks = tasks.filter(t => t.id !== taskId);
+            saveTasks();
+            renderTasks();
+            updateStats();
+        }
+
+        function renderTasks() {
+            todoList.innerHTML = '';
+            inProgressList.innerHTML = '';
+            completedList.innerHTML = '';
+
+            tasks.forEach(task => {
+                const taskElement = createTaskElement(task);
+                
+                switch(task.status) {
+                    case 'todo':
+                        todoList.appendChild(taskElement);
+                        break;
+                    case 'inProgress':
+                        inProgressList.appendChild(taskElement);
+                        break;
+                    case 'completed':
+                        completedList.appendChild(taskElement);
+                        break;
+                }
+            });
+        }
+
+        function createTaskElement(task) {
+            const div = document.createElement('div');
+            div.className = `task-item priority-${task.priority}`;
+            div.innerHTML = `
+                <span class="task-text">${task.text}</span>
+                <div class="task-actions">
+                    ${task.status === 'todo' ? '<button onclick="moveTask(' + task.id + ', \'inProgress\')" class="btn-small"><i class="fas fa-arrow-right"></i></button>' : ''}
+                    ${task.status === 'inProgress' ? '<button onclick="moveTask(' + task.id + ', \'completed\')" class="btn-small"><i class="fas fa-check"></i></button>' : ''}
+                    <button onclick="deleteTask(' + task.id + ')" class="btn-small btn-danger"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+            return div;
+        }
+
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        // Habit functionality
+        const habitInput = document.getElementById('habitInput');
+        const addHabitBtn = document.getElementById('addHabit');
+        const habitGrid = document.getElementById('habitGrid');
+
+        function addHabit() {
+            const text = habitInput.value.trim();
+            
+            if (text) {
+                const habit = {
+                    id: Date.now(),
+                    text: text,
+                    completed: false,
+                    streak: 0,
+                    createdAt: new Date().toISOString()
+                };
+                
+                habits.push(habit);
+                saveHabits();
+                renderHabits();
+                habitInput.value = '';
+                updateStats();
+            }
+        }
+
+        function toggleHabit(habitId) {
+            const habit = habits.find(h => h.id === habitId);
+            if (habit) {
+                habit.completed = !habit.completed;
+                if (habit.completed) {
+                    habit.streak++;
+                } else {
+                    habit.streak = Math.max(0, habit.streak - 1);
+                }
+                saveHabits();
+                renderHabits();
+                updateStats();
+            }
+        }
+
+        function deleteHabit(habitId) {
+            habits = habits.filter(h => h.id !== habitId);
+            saveHabits();
+            renderHabits();
+            updateStats();
+        }
+
+        function renderHabits() {
+            habitGrid.innerHTML = '';
+            
+            habits.forEach(habit => {
+                const habitElement = document.createElement('div');
+                habitElement.className = `habit-item ${habit.completed ? 'completed' : ''}`;
+                habitElement.innerHTML = `
+                    <div class="habit-content">
+                        <span class="habit-text">${habit.text}</span>
+                        <span class="habit-streak">${habit.streak} day streak</span>
+                    </div>
+                    <div class="habit-actions">
+                        <button onclick="toggleHabit(${habit.id})" class="btn-small ${habit.completed ? 'btn-success' : 'btn-secondary'}">
+                            <i class="fas fa-${habit.completed ? 'check' : 'circle'}"></i>
+                        </button>
+                        <button onclick="deleteHabit(${habit.id})" class="btn-small btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                habitGrid.appendChild(habitElement);
+            });
+        }
+
+        function saveHabits() {
+            localStorage.setItem('habits', JSON.stringify(habits));
+        }
+
+        // Schedule functionality
+        const saveScheduleBtn = document.getElementById('saveSchedule');
+        const clearScheduleBtn = document.getElementById('clearSchedule');
+        const loadTemplateBtn = document.getElementById('loadTemplate');
+
+        function saveSchedule() {
+            const activities = {};
+            document.querySelectorAll('.activity-input').forEach(input => {
+                if (input.value.trim()) {
+                    activities[input.dataset.time] = input.value.trim();
+                }
+            });
+            schedule = activities;
+            localStorage.setItem('schedule', JSON.stringify(schedule));
+            alert('Schedule saved successfully!');
+        }
+
+        function clearSchedule() {
+            if (confirm('Are you sure you want to clear the entire schedule?')) {
+                document.querySelectorAll('.activity-input').forEach(input => {
+                    input.value = '';
+                });
+                schedule = {};
+                localStorage.removeItem('schedule');
+            }
+        }
+
+        function loadTemplate() {
+            const template = {
+                '06:00': 'Wake up & Morning routine',
+                '07:00': 'Breakfast',
+                '08:00': 'Study session 1',
+                '09:00': 'Classes',
+                '10:00': 'Classes',
+                '11:00': 'Classes',
+                '12:00': 'Lunch break',
+                '13:00': 'Study session 2',
+                '14:00': 'Classes',
+                '15:00': 'Classes',
+                '16:00': 'Study session 3',
+                '17:00': 'Exercise/Physical activity',
+                '18:00': 'Dinner',
+                '19:00': 'Study session 4',
+                '20:00': 'Review & Planning',
+                '21:00': 'Free time/Relaxation',
+                '22:00': 'Bedtime routine'
+            };
+            
+            Object.keys(template).forEach(time => {
+                const input = document.querySelector(`[data-time="${time}"] .activity-input`);
+                if (input) {
+                    input.value = template[time];
+                }
+            });
+            schedule = template;
+            localStorage.setItem('schedule', JSON.stringify(schedule));
+        }
+
+        function loadSavedSchedule() {
+            Object.keys(schedule).forEach(time => {
+                const input = document.querySelector(`[data-time="${time}"] .activity-input`);
+                if (input) {
+                    input.value = schedule[time];
+                }
+            });
+        }
+
+        // Stats functionality
+        function updateStats() {
+            const completedTasks = tasks.filter(t => t.status === 'completed').length;
+            const completedHabits = habits.filter(h => h.completed).length;
+            const totalTasks = tasks.length;
+            const totalHabits = habits.length;
+            
+            const productivity = totalTasks + totalHabits > 0 
+                ? Math.round(((completedTasks + completedHabits) / (totalTasks + totalHabits)) * 100)
+                : 0;
+
+            document.getElementById('tasksCompleted').textContent = completedTasks;
+            document.getElementById('habitsDone').textContent = completedHabits;
+            document.getElementById('productivity').textContent = productivity + '%';
+        }
+
+        // Event listeners
+        addTaskBtn.addEventListener('click', addTask);
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTask();
+        });
+
+        addHabitBtn.addEventListener('click', addHabit);
+        habitInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addHabit();
+        });
+
+        saveScheduleBtn.addEventListener('click', saveSchedule);
+        clearScheduleBtn.addEventListener('click', clearSchedule);
+        loadTemplateBtn.addEventListener('click', loadTemplate);
+
+        // Initialize
+        renderTasks();
+        renderHabits();
+        loadSavedSchedule();
+        updateStats();
+    </script>
+</body>
+</html>

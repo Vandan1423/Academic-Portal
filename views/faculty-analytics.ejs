@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Faculty Portal</title>
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/faculty.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <%- include("partials/navbar") %>
+    <div class="content">
+        <h1><i class="fas fa-chart-bar"></i> Analytics Dashboard</h1>
+        <p>Comprehensive insights into student performance and academic trends.</p>
+
+        <!-- Key Metrics Overview -->
+        <div class="metrics-overview">
+            <h2><i class="fas fa-tachometer-alt"></i> Key Performance Indicators</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>Total Students</h3>
+                        <div class="metric-value" id="totalStudents">0</div>
+                        <div class="metric-change positive">
+                            <i class="fas fa-arrow-up"></i> +5% from last month
+                        </div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>Average Performance</h3>
+                        <div class="metric-value" id="avgPerformance">0%</div>
+                        <div class="metric-change positive">
+                            <i class="fas fa-arrow-up"></i> +2.3% from last month
+                        </div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>Attendance Rate</h3>
+                        <div class="metric-value" id="attendanceRate">0%</div>
+                        <div class="metric-change positive">
+                            <i class="fas fa-arrow-up"></i> +1.8% from last month
+                        </div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3>Pass Rate</h3>
+                        <div class="metric-value" id="passRate">0%</div>
+                        <div class="metric-change positive">
+                            <i class="fas fa-arrow-up"></i> +3.1% from last month
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Charts -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <h2><i class="fas fa-chart-area"></i> Performance Trends</h2>
+                <div class="chart-controls">
+                    <select id="performancePeriod">
+                        <option value="monthly">Monthly</option>
+                        <option value="quarterly">Quarterly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+                    <select id="performanceSubject">
+                        <option value="all">All Subjects</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Biology">Biology</option>
+                        <option value="English">English</option>
+                    </select>
+                </div>
+                <canvas id="performanceChart" width="400" height="200"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2><i class="fas fa-chart-pie"></i> Subject Performance Distribution</h2>
+                <canvas id="subjectChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- Attendance Analytics -->
+        <div class="attendance-section">
+            <h2><i class="fas fa-calendar-alt"></i> Attendance Analytics</h2>
+            <div class="attendance-grid">
+                <div class="attendance-chart">
+                    <h3>Weekly Attendance Trend</h3>
+                    <canvas id="attendanceChart" width="400" height="200"></canvas>
+                </div>
+                <div class="attendance-stats">
+                    <h3>Attendance Statistics</h3>
+                    <div class="attendance-metrics">
+                        <div class="attendance-metric">
+                            <span class="metric-label">Excellent (90%+)</span>
+                            <span class="metric-value" id="excellentAttendance">0</span>
+                        </div>
+                        <div class="attendance-metric">
+                            <span class="metric-label">Good (80-89%)</span>
+                            <span class="metric-value" id="goodAttendance">0</span>
+                        </div>
+                        <div class="attendance-metric">
+                            <span class="metric-label">Fair (70-79%)</span>
+                            <span class="metric-value" id="fairAttendance">0</span>
+                        </div>
+                        <div class="attendance-metric">
+                            <span class="metric-label">Poor (<70%)</span>
+                            <span class="metric-value" id="poorAttendance">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grade Distribution -->
+        <div class="grade-section">
+            <h2><i class="fas fa-chart-bar"></i> Grade Distribution</h2>
+            <div class="grade-grid">
+                <div class="grade-chart">
+                    <canvas id="gradeChart" width="400" height="200"></canvas>
+                </div>
+                <div class="grade-breakdown">
+                    <h3>Grade Breakdown</h3>
+                    <div class="grade-list">
+                        <div class="grade-item">
+                            <span class="grade-label">A+ (90-100%)</span>
+                            <div class="grade-bar">
+                                <div class="grade-fill" style="width: 15%"></div>
+                            </div>
+                            <span class="grade-count">15%</span>
+                        </div>
+                        <div class="grade-item">
+                            <span class="grade-label">A (80-89%)</span>
+                            <div class="grade-bar">
+                                <div class="grade-fill" style="width: 25%"></div>
+                            </div>
+                            <span class="grade-count">25%</span>
+                        </div>
+                        <div class="grade-item">
+                            <span class="grade-label">B (70-79%)</span>
+                            <div class="grade-bar">
+                                <div class="grade-fill" style="width: 35%"></div>
+                            </div>
+                            <span class="grade-count">35%</span>
+                        </div>
+                        <div class="grade-item">
+                            <span class="grade-label">C (60-69%)</span>
+                            <div class="grade-bar">
+                                <div class="grade-fill" style="width: 20%"></div>
+                            </div>
+                            <span class="grade-count">20%</span>
+                        </div>
+                        <div class="grade-item">
+                            <span class="grade-label">D/F (<60%)</span>
+                            <div class="grade-bar">
+                                <div class="grade-fill" style="width: 5%"></div>
+                            </div>
+                            <span class="grade-count">5%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Performers -->
+        <div class="top-performers-section">
+            <h2><i class="fas fa-trophy"></i> Top Performers</h2>
+            <div class="performers-grid">
+                <div class="performer-card">
+                    <div class="performer-rank">1</div>
+                    <div class="performer-info">
+                        <h3>Sarah Johnson</h3>
+                        <p>Grade 11 • Mathematics</p>
+                        <div class="performer-score">98%</div>
+                    </div>
+                </div>
+                <div class="performer-card">
+                    <div class="performer-rank">2</div>
+                    <div class="performer-info">
+                        <h3>Michael Brown</h3>
+                        <p>Grade 12 • Physics</p>
+                        <div class="performer-score">96%</div>
+                    </div>
+                </div>
+                <div class="performer-card">
+                    <div class="performer-rank">3</div>
+                    <div class="performer-info">
+                        <h3>Emily Davis</h3>
+                        <p>Grade 10 • Chemistry</p>
+                        <div class="performer-score">94%</div>
+                    </div>
+                </div>
+                <div class="performer-card">
+                    <div class="performer-rank">4</div>
+                    <div class="performer-info">
+                        <h3>David Wilson</h3>
+                        <p>Grade 11 • Biology</p>
+                        <div class="performer-score">92%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Options -->
+        <div class="export-section">
+            <h2><i class="fas fa-download"></i> Export Reports</h2>
+            <div class="export-options">
+                <button class="btn btn-primary" onclick="exportReport('performance')">
+                    <i class="fas fa-file-pdf"></i> Export Performance Report
+                </button>
+                <button class="btn btn-info" onclick="exportReport('attendance')">
+                    <i class="fas fa-file-excel"></i> Export Attendance Report
+                </button>
+                <button class="btn btn-secondary" onclick="exportReport('grades')">
+                    <i class="fas fa-file-csv"></i> Export Grade Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for analytics
+        const analyticsData = {
+            totalStudents: 120,
+            avgPerformance: 82.5,
+            attendanceRate: 88.3,
+            passRate: 94.2,
+            performanceTrend: [75, 78, 82, 79, 85, 88, 82.5],
+            subjectPerformance: {
+                Mathematics: 85,
+                Physics: 78,
+                Chemistry: 82,
+                Biology: 80,
+                English: 88
+            },
+            attendanceTrend: [90, 88, 92, 85, 89, 91, 88.3],
+            attendanceBreakdown: {
+                excellent: 45,
+                good: 35,
+                fair: 15,
+                poor: 5
+            }
+        };
+
+        // Initialize analytics
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMetrics();
+            initializeCharts();
+        });
+
+        // Update key metrics
+        function updateMetrics() {
+            document.getElementById('totalStudents').textContent = analyticsData.totalStudents;
+            document.getElementById('avgPerformance').textContent = analyticsData.avgPerformance + '%';
+            document.getElementById('attendanceRate').textContent = analyticsData.attendanceRate + '%';
+            document.getElementById('passRate').textContent = analyticsData.passRate + '%';
+
+            // Update attendance breakdown
+            document.getElementById('excellentAttendance').textContent = analyticsData.attendanceBreakdown.excellent;
+            document.getElementById('goodAttendance').textContent = analyticsData.attendanceBreakdown.good;
+            document.getElementById('fairAttendance').textContent = analyticsData.attendanceBreakdown.fair;
+            document.getElementById('poorAttendance').textContent = analyticsData.attendanceBreakdown.poor;
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            // Performance Trend Chart
+            const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+            new Chart(performanceCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Average Performance (%)',
+                        data: analyticsData.performanceTrend,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            // Subject Performance Chart
+            const subjectCtx = document.getElementById('subjectChart').getContext('2d');
+            new Chart(subjectCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(analyticsData.subjectPerformance),
+                    datasets: [{
+                        data: Object.values(analyticsData.subjectPerformance),
+                        backgroundColor: [
+                            '#667eea',
+                            '#764ba2',
+                            '#f093fb',
+                            '#f5576c',
+                            '#4facfe'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    }
+                }
+            });
+
+            // Attendance Chart
+            const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+            new Chart(attendanceCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'],
+                    datasets: [{
+                        label: 'Attendance Rate (%)',
+                        data: analyticsData.attendanceTrend,
+                        backgroundColor: '#28a745',
+                        borderColor: '#20c997',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            // Grade Distribution Chart
+            const gradeCtx = document.getElementById('gradeChart').getContext('2d');
+            new Chart(gradeCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['A+', 'A', 'B', 'C', 'D/F'],
+                    datasets: [{
+                        label: 'Number of Students',
+                        data: [18, 30, 42, 24, 6],
+                        backgroundColor: [
+                            '#28a745',
+                            '#20c997',
+                            '#ffc107',
+                            '#fd7e14',
+                            '#dc3545'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Export reports
+        function exportReport(type) {
+            let filename = '';
+            let content = '';
+            
+            switch(type) {
+                case 'performance':
+                    filename = 'performance_report.pdf';
+                    content = 'Performance Report\n\n' +
+                             'Total Students: ' + analyticsData.totalStudents + '\n' +
+                             'Average Performance: ' + analyticsData.avgPerformance + '%\n' +
+                             'Pass Rate: ' + analyticsData.passRate + '%';
+                    break;
+                case 'attendance':
+                    filename = 'attendance_report.xlsx';
+                    content = 'Attendance Report\n\n' +
+                             'Overall Attendance Rate: ' + analyticsData.attendanceRate + '%\n' +
+                             'Excellent (90%+): ' + analyticsData.attendanceBreakdown.excellent + ' students\n' +
+                             'Good (80-89%): ' + analyticsData.attendanceBreakdown.good + ' students\n' +
+                             'Fair (70-79%): ' + analyticsData.attendanceBreakdown.fair + ' students\n' +
+                             'Poor (<70%): ' + analyticsData.attendanceBreakdown.poor + ' students';
+                    break;
+                case 'grades':
+                    filename = 'grade_report.csv';
+                    content = 'Grade,Count,Percentage\n' +
+                             'A+,18,15%\n' +
+                             'A,30,25%\n' +
+                             'B,42,35%\n' +
+                             'C,24,20%\n' +
+                             'D/F,6,5%';
+                    break;
+            }
+            
+            // Create and download file
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.click();
+            
+            showNotification('Report exported successfully!', 'success');
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                ${message}
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,15 @@
+.content {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.content h1 {
+    font-size: 36px;
+    color: #ff6f61;
+}
+
+.content p {
+    font-size: 18px;
+    color: #555;
+    margin-top: 10px;
+}

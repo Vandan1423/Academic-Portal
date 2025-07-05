@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/home.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <%- include("partials/navbar") %>
+    <div class="content">
+        <% if (user) { %>
+            <!-- Student Portal -->
+            <div class="student-portal">
+                <h1><i class="fas fa-user-graduate"></i> Welcome to the Student Portal</h1>
+                <p class="welcome-text">Hello <%= user.name %>, your one-stop destination for all academic resources.</p>
+                
+                <div class="quick-actions">
+                    <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                    <div class="action-grid">
+                        <div class="action-card">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h3>View Timetable</h3>
+                            <p>Check your class schedule</p>
+                            <a href="/timetable" class="action-btn">View Schedule</a>
+                        </div>
+                        <div class="action-card">
+                            <i class="fas fa-book"></i>
+                            <h3>Study Resources</h3>
+                            <p>Access study materials</p>
+                            <a href="/study" class="action-btn">Start Studying</a>
+                        </div>
+                        <div class="action-card">
+                            <i class="fas fa-tasks"></i>
+                            <h3>Daily Routine</h3>
+                            <p>Plan your day</p>
+                            <a href="/dailyroutine" class="action-btn">Plan Day</a>
+                        </div>
+                        <div class="action-card">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h3>Subjects</h3>
+                            <p>View your subjects</p>
+                            <a href="/subjects" class="action-btn">View Subjects</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h2><i class="fas fa-history"></i> Recent Activity</h2>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Last login: <%= new Date().toLocaleDateString() %></span>
+                        </div>
+                        <div class="activity-item">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Next class: Mathematics at 9:00 AM</span>
+                        </div>
+                        <div class="activity-item">
+                            <i class="fas fa-book-open"></i>
+                            <span>Study session: 2 hours completed today</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } else if (admin) { %>
+            <!-- Faculty Portal -->
+            <div class="faculty-portal">
+                <h1><i class="fas fa-chalkboard-teacher"></i> Welcome to the Faculty Portal</h1>
+                <p class="welcome-text">Hello <%= admin.name %>, manage your classes and academic resources.</p>
+                
+                <div class="faculty-dashboard">
+                    <h2><i class="fas fa-tachometer-alt"></i> Faculty Dashboard</h2>
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <i class="fas fa-calendar-plus"></i>
+                            <h3>Manage Timetable</h3>
+                            <p>Create and edit class schedules</p>
+                            <a href="/faculty/timetable" class="dashboard-btn">Manage Schedule</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <i class="fas fa-users"></i>
+                            <h3>Student Management</h3>
+                            <p>View and manage student records</p>
+                            <a href="/faculty/students" class="dashboard-btn">View Students</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>Resource Management</h3>
+                            <p>Upload and manage study materials</p>
+                            <a href="/faculty/resources" class="dashboard-btn">Manage Resources</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <i class="fas fa-chart-bar"></i>
+                            <h3>Analytics</h3>
+                            <p>View student performance data</p>
+                            <a href="/faculty/analytics" class="dashboard-btn">View Analytics</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faculty-stats">
+                    <h2><i class="fas fa-chart-pie"></i> Quick Stats</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">Active Classes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">120</div>
+                            <div class="stat-label">Total Students</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">Resources Uploaded</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">95%</div>
+                            <div class="stat-label">Attendance Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>
