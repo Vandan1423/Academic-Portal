@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subjects & Resources</title>
-    <link rel="stylesheet" href="/navbar.css">
-    <link rel="stylesheet" href="/subjects.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/subjects.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -63,8 +63,11 @@
     </div>
 
     <script>
-        let facultyResources = [];
-        let subjects = [
+        // Get data from server
+        const resourcesData = <%- JSON.stringify(resources) %>;
+        const studentSubjects = <%- JSON.stringify(subjects) %>;
+        
+        let subjectsConfig = [
             {
                 name: "Mathematics",
                 icon: "fas fa-calculator",
@@ -105,71 +108,19 @@
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-            loadFacultyResources();
             renderSubjects();
             renderRecentResources();
             renderPopularResources();
             setupSearchAndFilter();
         });
 
-        // Load faculty resources
-        function loadFacultyResources() {
-            // Try to get faculty resources from shared storage
-            let storedResources = localStorage.getItem('sharedResources');
-            if (!storedResources) {
-                // Fallback to faculty-specific storage
-                storedResources = localStorage.getItem('facultyResources');
-            }
-            
-            if (storedResources) {
-                facultyResources = JSON.parse(storedResources);
-            } else {
-                // Sample resources if none exist
-                facultyResources = [
-                    {
-                        id: 1,
-                        title: "Calculus Fundamentals",
-                        subject: "Mathematics",
-                        type: "Notes",
-                        description: "Comprehensive notes on calculus basics",
-                        uploadDate: "2024-01-15",
-                        downloads: 45,
-                        fileSize: "2.3 MB",
-                        teacher: "Dr. Smith"
-                    },
-                    {
-                        id: 2,
-                        title: "Physics Lab Manual",
-                        subject: "Physics",
-                        type: "Study Guide",
-                        description: "Complete lab manual for physics experiments",
-                        uploadDate: "2024-01-10",
-                        downloads: 32,
-                        fileSize: "1.8 MB",
-                        teacher: "Prof. Johnson"
-                    },
-                    {
-                        id: 3,
-                        title: "Chemistry Practice Problems",
-                        subject: "Chemistry",
-                        type: "Practice Test",
-                        description: "Set of practice problems with solutions",
-                        uploadDate: "2024-01-12",
-                        downloads: 28,
-                        fileSize: "3.1 MB",
-                        teacher: "Dr. Brown"
-                    }
-                ];
-            }
-        }
-
         // Render subjects
         function renderSubjects() {
             const subjectsGrid = document.getElementById('subjectsGrid');
             
             let html = '';
-            subjects.forEach(subject => {
-                const subjectResources = facultyResources.filter(r => r.subject === subject.name);
+            subjectsConfig.forEach(subject => {
+                const subjectResources = resourcesData.filter(r => r.subject === subject.name);
                 const resourceCount = subjectResources.length;
                 
                 html += `
@@ -197,8 +148,8 @@
         // Render recent resources
         function renderRecentResources() {
             const recentContainer = document.getElementById('recentResources');
-            const recentResources = facultyResources
-                .sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate))
+            const recentResources = resourcesData
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                 .slice(0, 5);
             
             if (recentResources.length === 0) {
@@ -215,15 +166,15 @@
                         </div>
                         <div class="resource-info">
                             <h4>${resource.title}</h4>
-                            <p>${resource.description}</p>
+                            <p>${resource.description || 'No description'}</p>
                             <div class="resource-meta">
-                                <span><i class="fas fa-user"></i> ${resource.teacher}</span>
-                                <span><i class="fas fa-calendar"></i> ${resource.uploadDate}</span>
+                                <span><i class="fas fa-user"></i> ${resource.uploadedBy.name}</span>
+                                <span><i class="fas fa-calendar"></i> ${new Date(resource.createdAt).toLocaleDateString()}</span>
                                 <span><i class="fas fa-download"></i> ${resource.downloads}</span>
                             </div>
                         </div>
                         <div class="resource-actions">
-                            <button class="btn btn-small btn-primary" onclick="downloadResource(${resource.id})">
+                            <button class="btn btn-small btn-primary" onclick="downloadResource('${resource._id}')">
                                 <i class="fas fa-download"></i> Download
                             </button>
                         </div>
@@ -237,7 +188,7 @@
         // Render popular resources
         function renderPopularResources() {
             const popularContainer = document.getElementById('popularResources');
-            const popularResources = facultyResources
+            const popularResources = resourcesData
                 .sort((a, b) => b.downloads - a.downloads)
                 .slice(0, 5);
             
@@ -255,15 +206,15 @@
                         </div>
                         <div class="resource-info">
                             <h4>${resource.title}</h4>
-                            <p>${resource.description}</p>
+                            <p>${resource.description || 'No description'}</p>
                             <div class="resource-meta">
-                                <span><i class="fas fa-user"></i> ${resource.teacher}</span>
+                                <span><i class="fas fa-user"></i> ${resource.uploadedBy.name}</span>
                                 <span><i class="fas fa-star"></i> ${resource.downloads} downloads</span>
-                                <span><i class="fas fa-file"></i> ${resource.fileSize}</span>
+                                <span><i class="fas fa-eye"></i> ${resource.views} views</span>
                             </div>
                         </div>
                         <div class="resource-actions">
-                            <button class="btn btn-small btn-primary" onclick="downloadResource(${resource.id})">
+                            <button class="btn btn-small btn-primary" onclick="downloadResource('${resource._id}')">
                                 <i class="fas fa-download"></i> Download
                             </button>
                         </div>
@@ -277,18 +228,19 @@
         // Get resource icon based on type
         function getResourceIcon(type) {
             const icons = {
-                'Notes': 'file-alt',
-                'Assignment': 'tasks',
-                'Study Guide': 'book',
+                'Document': 'file-alt',
+                'Presentation': 'file-powerpoint',
                 'Video': 'video',
-                'Practice Test': 'question-circle'
+                'Image': 'image',
+                'Link': 'link',
+                'Quiz': 'question-circle'
             };
             return icons[type] || 'file';
         }
 
         // Show subject resources
         function showSubjectResources(subjectName) {
-            const subjectResources = facultyResources.filter(r => r.subject === subjectName);
+            const subjectResources = resourcesData.filter(r => r.subject === subjectName);
             
             if (subjectResources.length === 0) {
                 alert(`No resources available for ${subjectName} yet.`);
@@ -375,6 +327,22 @@
                     const matchesSearch = resource.title.toLowerCase().includes(searchTerm) ||
                                          resource.description.toLowerCase().includes(searchTerm) ||
                                          resource.subject.toLowerCase().includes(searchTerm);
+        // Setup search and filter
+        function setupSearchAndFilter() {
+            const searchInput = document.getElementById('searchInput');
+            const subjectFilter = document.getElementById('subjectFilter');
+            const typeFilter = document.getElementById('typeFilter');
+            
+            function filterResources() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const selectedSubject = subjectFilter.value;
+                const selectedType = typeFilter.value;
+                
+                const filteredResources = resourcesData.filter(resource => {
+                    const matchesSearch = !searchTerm || 
+                        resource.title.toLowerCase().includes(searchTerm) ||
+                        resource.subject.toLowerCase().includes(searchTerm) ||
+                        (resource.description && resource.description.toLowerCase().includes(searchTerm));
                     const matchesSubject = !selectedSubject || resource.subject === selectedSubject;
                     const matchesType = !selectedType || resource.type === selectedType;
                     
@@ -397,6 +365,12 @@
             if (filteredResources.length > 0) {
                 showNotification(`Found ${filteredResources.length} resources`, 'info');
             }
+        }
+
+        // Download resource
+        function downloadResource(resourceId) {
+            // In a real implementation, this would make an API call to download
+            showNotification('Download started...', 'success');
         }
 
         // Show notification

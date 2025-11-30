@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Login</title>
-    <link rel="stylesheet" href="/login.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
     <div class="login-container">
@@ -16,7 +16,14 @@
                 <%= message %>
             </div>
         <% } %>
-        <form action="/home" method="POST">
+        
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="error-message" style="background-color: #fee; border: 1px solid #fcc; color: #c33; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                <%= error %>
+            </div>
+        <% } %>
+        
+        <form action="/login" method="POST">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Enter your email" required>

@@ -1,22 +1,22 @@
 <nav class="navbar">
     <div class="logo">
-        <% if (typeof user !== 'undefined' && user) { %>
+        <% if (typeof student !== 'undefined' && student) { %>
             <a href="/home"><i class="fas fa-user-graduate"></i> Student Portal</a>
-        <% } else if (typeof admin !== 'undefined' && admin) { %>
+        <% } else if (typeof faculty !== 'undefined' && faculty) { %>
             <a href="/home"><i class="fas fa-chalkboard-teacher"></i> Faculty Portal</a>
         <% } else { %>
             <a href="/home">Classroom Portal</a>
         <% } %>
     </div>
     <ul class="nav-links">
-        <% if (typeof user !== 'undefined' && user) { %>
+        <% if (typeof student !== 'undefined' && student) { %>
             <!-- Student Navigation -->
             <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
             <li><a href="/timetable"><i class="fas fa-calendar-alt"></i> Timetable</a></li>
             <li><a href="/subjects"><i class="fas fa-graduation-cap"></i> Subjects</a></li>
             <li><a href="/dailyroutine"><i class="fas fa-tasks"></i> Daily Routine</a></li>
             <li><a href="/study"><i class="fas fa-book"></i> Study</a></li>
-        <% } else if (typeof admin !== 'undefined' && admin) { %>
+        <% } else if (typeof faculty !== 'undefined' && faculty) { %>
             <!-- Faculty Navigation -->
             <li><a href="/home"><i class="fas fa-home"></i> Dashboard</a></li>
             <li><a href="/faculty/timetable"><i class="fas fa-calendar-plus"></i> Manage Timetable</a></li>
@@ -29,14 +29,14 @@
             <li><a href="/signup"><i class="fas fa-user-plus"></i> Sign Up</a></li>
         <% } %>
     </ul>
-    <% if (typeof user !== 'undefined' && user) { %>
+    <% if (typeof student !== 'undefined' && student) { %>
         <div class="user-info">
-            <span><i class="fas fa-user"></i> <%= user.name %></span>
+            <span><i class="fas fa-user"></i> <%= student.name %></span>
             <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
-    <% } else if (typeof admin !== 'undefined' && admin) { %>
+    <% } else if (typeof faculty !== 'undefined' && faculty) { %>
         <div class="user-info">
-            <span><i class="fas fa-user-tie"></i> <%= admin.name %></span>
+            <span><i class="fas fa-user-tie"></i> <%= faculty.name %></span>
             <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
     <% } %>

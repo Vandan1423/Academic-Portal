@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="/navbar.css">
-    <link rel="stylesheet" href="/home.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/home.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <%- include("partials/navbar") %>
     <div class="content">
-        <% if (user) { %>
+        <% if (student) { %>
             <!-- Student Portal -->
             <div class="student-portal">
                 <h1><i class="fas fa-user-graduate"></i> Welcome to the Student Portal</h1>
-                <p class="welcome-text">Hello <%= user.name %>, your one-stop destination for all academic resources.</p>
+                <p class="welcome-text">Hello <%= student.name %>, your one-stop destination for all academic resources.</p>
                 
                 <div class="quick-actions">
                     <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
@@ -54,22 +54,33 @@
                             <i class="fas fa-clock"></i>
                             <span>Last login: <%= new Date().toLocaleDateString() %></span>
                         </div>
-                        <div class="activity-item">
-                            <i class="fas fa-calendar-check"></i>
-                            <span>Next class: Mathematics at 9:00 AM</span>
-                        </div>
+                        <% if (nextClass) { %>
+                            <div class="activity-item">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>Next class: <%= nextClass.subject %> at <%= nextClass.startTime %></span>
+                            </div>
+                        <% } else { %>
+                            <div class="activity-item">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>No more classes today</span>
+                            </div>
+                        <% } %>
                         <div class="activity-item">
                             <i class="fas fa-book-open"></i>
-                            <span>Study session: 2 hours completed today</span>
+                            <span>Performance: <%= student.performance %>%</span>
+                        </div>
+                        <div class="activity-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Attendance: <%= student.attendance %>%</span>
                         </div>
                     </div>
                 </div>
             </div>
-        <% } else if (admin) { %>
+        <% } else if (faculty) { %>
             <!-- Faculty Portal -->
             <div class="faculty-portal">
                 <h1><i class="fas fa-chalkboard-teacher"></i> Welcome to the Faculty Portal</h1>
-                <p class="welcome-text">Hello <%= admin.name %>, manage your classes and academic resources.</p>
+                <p class="welcome-text">Hello <%= faculty.name %>, manage your classes and academic resources.</p>
                 
                 <div class="faculty-dashboard">
                     <h2><i class="fas fa-tachometer-alt"></i> Faculty Dashboard</h2>
